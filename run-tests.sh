@@ -19,3 +19,9 @@ failed=$(expr ${testCount} - ${successful})
 success_percentage=$(expr ${successful} / ${testCount} \* 100)
 
 echo "Successful: ${successful}, failed: ${failed}, success percentage: ${success_percentage}%"
+
+if [ ${failed} -gt 0 ]; then
+    exit 1
+fi
+
+exit 0
