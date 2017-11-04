@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 test_directory="test-get-highest-versioned-subdirectory-tmp"
 
 if [ ! -e "${test_directory}" ]; then
