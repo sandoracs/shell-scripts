@@ -119,7 +119,7 @@ check_expression "${0}" $((${#} >= 1)) "${#} >= 1" ${exit_invalid_arguments}
 parent_directory="${1}"
 prefix_filter=""
 
-if [ ${#} > 1 ]; then
+if [ ${#} -gt 1 ]; then
     prefix_filter="${2}"
 fi
 
