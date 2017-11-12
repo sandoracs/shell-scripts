@@ -1,6 +1,8 @@
 # shell-scripts [![Test status](https://travis-ci.org/Pregnor/shell-scripts.svg?branch=master)](https://travis-ci.org/Pregnor/shell-scripts)
 Basic shell scripts I wrote myself for easing the use of operating systems.
 
+Test status: [![Test status](https://travis-ci.org/Pregnor/shell-scripts.svg?branch=master)](https://travis-ci.org/Pregnor/shell-scripts)
+
 # License:
 > Copyright from 2017 to current date, Patrik Egyed
 >
