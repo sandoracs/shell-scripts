@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-directory=$(dirname "${0}")
+script_directory="$(cd "$(dirname "${0:-${PWD}}")" && pwd)"
 test_name_expression="test-.*\.sh"
-tests=$(find ${directory} -type f | grep "${test_name_expression}")
+tests=$(find ${script_directory} -type f | grep "${test_name_expression}")
 testCount=${#tests[@]}
 
 successful=0

@@ -25,11 +25,11 @@ create_directories() {
     test_directories=("${!array_name}")
 
     if [ ! -e "${temporary_directory}" ]; then
-        mkdir "./${temporary_directory}"
+        mkdir "${script_directory}/${temporary_directory}"
     fi
 
     for item in ${test_directories[@]}; do
-        mkdir "./${temporary_directory}/${item}"
+        mkdir "${script_directory}/${temporary_directory}/${item}"
     done
 }
 
@@ -46,6 +46,8 @@ error() {
     exit ${exit_code}
 }
 
+script_directory="$(cd "$(dirname "${0:-${PWD}}")" && pwd)"
+
 temporary_directory="test-get-highest-versioned-subdirectory-tmp"
 test_directories=(\
 "test-fake" \
@@ -61,10 +63,10 @@ test_directories=(\
 
 create_directories "${temporary_directory}" test_directories
 
-result_simple=$(./get-highest-versioned-subdirectory.sh ${temporary_directory})
+result_simple=$(${script_directory}/get-highest-versioned-subdirectory.sh ${temporary_directory})
 expected_result_simple="${temporary_directory}/10.4.0m"
 
-result_filtered=$(./get-highest-versioned-subdirectory.sh ${temporary_directory} "test-")
+result_filtered=$(${script_directory}/get-highest-versioned-subdirectory.sh ${temporary_directory} "test-")
 expected_result_filtered="${temporary_directory}/test-10.4.0l"
 
 rm -rf "${temporary_directory}"
