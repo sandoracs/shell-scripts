@@ -15,34 +15,58 @@
     > Set-ExecutionPolicy RemoteSigned
 #>
 
-function prompt {
+# TODO: tests.
+
+. "${PSScriptRoot}/git-prompt.ps1"
+
+function Get-PromptCurrentPath {
     ${currentHome} = ${Home} -replace '\\', '\\' # Note: this is required though it seems like an idempotent operation, it is not.
     ${currentPath} = $($(Get-Location) -replace ${currentHome}, '~') -replace '\\', '/'
 
-    ${dateTime} = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    return ${currentPath}
+}
 
-    ${gitBranch} = Get-GitBranch
-    ${gitHash} = Get-GitHash
-    #${gitStatus} = Get-GitStatus
+function Get-PromptDate {
+    return Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+}
 
-    Write-Host "`n${dateTime}" -NoNewline
+function Get-PromptGit {
+    ${gits} = @()
+    ${gits} += Get-GitBranch
+    # ${gits} += Get-GitHash
+    # ${gits} += Get-GitUpstreamStatus
+
+    # ${gitString} = "("
+    # foreach (${git} in ${gits}) {
+    #     if (${git} -ne "") {
+    #         if (${gitString} -eq "(") {
+    #             ${gitString} += ${git}
+    #         }
+    #         else {
+    #             ${gitString} += " " + ${git}
+    #         }
+    #     }
+    # }
+    # ${gitString} += ")"
+
+    if (${gitString} -eq "()") {
+        return ""
+    }
+
+    return ${gitString}
+}
+
+function prompt {
+    Write-Host "`n$(Get-PromptDate)" -NoNewline
     Write-Host " ${Env:ComputerName}" -NoNewline -ForegroundColor Green
     Write-Host " ${Env:UserName}" -NoNewline -ForegroundColor Green
     Write-Host " @ " -NoNewline
-    Write-Host ${currentPath} -NoNewline -ForegroundColor Cyan
+    Write-Host $(Get-PromptCurrentPath) -NoNewline -ForegroundColor Cyan
 
-    if ("${gitBranch}" -ne "") {
-        Write-Host " (" -NoNewline -ForegroundColor Yellow
-        Write-Host "${gitBranch} ${gitHash}" -NoNewline -ForegroundColor Yellow
-
-        if ("${gitStatus}" -ne "") {
-            Write-Host " ${gitStatus}" -NoNewline -ForegroundColor Yellow
-        }
-        
-        Write-Host ")" -NoNewline -ForegroundColor Yellow
+    ${git} = Get-PromptGit
+    if (${git} -ne "") {
+        Write-Host " ${git}" -NoNewLine -ForegroundColor Yellow
     }
 
     return "`r`n> "
 }
-
-. "${PSScriptRoot}/git-prompt.ps1"
