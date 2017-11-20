@@ -25,11 +25,11 @@ create_directories() {
     test_directories=("${!array_name}")
 
     if [ ! -e "${temporary_directory}" ]; then
-        mkdir "${script_directory}/${temporary_directory}"
+        mkdir "./${temporary_directory}"
     fi
 
     for item in ${test_directories[@]}; do
-        mkdir "${script_directory}/${temporary_directory}/${item}"
+        mkdir "./${temporary_directory}/${item}"
     done
 }
 
