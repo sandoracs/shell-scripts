@@ -81,7 +81,7 @@ get_versioned_directory() {
             subversion_index=0
             version_comparison_result=0
             for subversion in "${versions[@]}"; do
-                [[ -z  ${current_versions[subversion_index]}  ]] && current_versions[subversion_index]=0
+                [ -z  ${current_versions[subversion_index]} ] && current_versions[subversion_index]=0
                 if [ ${current_versions[subversion_index]} -gt ${subversion} ]; then
                     version_comparison_result=1
                     break
